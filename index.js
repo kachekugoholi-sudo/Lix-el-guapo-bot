@@ -9,8 +9,6 @@ const myPhoneNumber = '522464722709'
 const logger = pino({ level: 'silent' })
 
 const connectToWhatsApp = async () => {
-  // Ya NO cargamos mute.json aquí, así que no fallará si no existe la carpeta.
-  
   const { state, saveCreds } = await useMultiFileAuthState('session')
   const sock = makeWASocket({ logger, auth: state })
 
@@ -49,8 +47,6 @@ const connectToWhatsApp = async () => {
                     message.message.extendedTextMessage?.text ||
                     ""
       const jid = message.key.remoteJid
-      
-      // Se eliminó por completo la verificación de muteados y los comandos .mute / .unmute
 
       console.log('📩 Mensaje recibido:', texto)
 
