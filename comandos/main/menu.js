@@ -44,7 +44,7 @@ export default {
 > ✨ 𝖰𝗎𝗂𝗍𝖺 𝗌𝗂𝗅𝖾𝗇𝖼𝗂𝗈`;
 
       await sock.sendMessage(jid, {
-        image: { url: 'https://files.evogb.win/lOuoMM.jpg' },
+        image: { url: 'https://files.evogb.win/jwmu5N.jpg' },
         caption: menuTexto,
         mentions: [userJid]
       }, { quoted: message });
