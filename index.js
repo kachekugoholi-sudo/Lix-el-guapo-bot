@@ -9,7 +9,8 @@ const myPhoneNumber = '522464722709'
 const logger = pino({ level: 'silent' })
 
 const connectToWhatsApp = async () => {
-  let muteados = JSON.parse(fs.readFileSync("./database/mute.json"))
+  // Ya NO cargamos mute.json aquí, así que no fallará si no existe la carpeta.
+  
   const { state, saveCreds } = await useMultiFileAuthState('session')
   const sock = makeWASocket({ logger, auth: state })
 
@@ -48,48 +49,8 @@ const connectToWhatsApp = async () => {
                     message.message.extendedTextMessage?.text ||
                     ""
       const jid = message.key.remoteJid
-      const autor = message.key.participant || message.key.remoteJid
-
-      if (muteados.includes(autor) && !message.key.fromMe) {
-        await sock.sendMessage(jid, {
-          delete: message.key
-        })
-        return
-      }
-
-      if (texto.startsWith(".mute")) {
-        const mencionado = message.message.extendedTextMessage?.contextInfo?.mentionedJid
-        if (!mencionado || mencionado.length === 0) {
-          return sock.sendMessage(jid, {
-            text: "❌ Usa: .mute @usuario"
-          })
-        }
-        if (!muteados.includes(mencionado[0])) {
-          muteados.push(mencionado[0])
-          fs.writeFileSync("./database/mute.json", JSON.stringify(muteados, null, 2))
-        }
-        await sock.sendMessage(jid, {
-          text: "🔇 Usuario muteado.",
-          mentions: mencionado
-        })
-        continue
-      }
-
-      if (texto.startsWith(".unmute")) {
-        const mencionado = message.message.extendedTextMessage?.contextInfo?.mentionedJid
-        if (!mencionado || mencionado.length === 0) {
-          return sock.sendMessage(jid, {
-            text: "❌ Usa: .unmute @usuario"
-          })
-        }
-        muteados = muteados.filter(id => id !== mencionado[0])
-        fs.writeFileSync("./database/mute.json", JSON.stringify(muteados, null, 2))
-        await sock.sendMessage(jid, {
-          text: "🔊 Usuario desmuteado.",
-          mentions: mencionado
-        })
-        continue
-      }
+      
+      // Se eliminó por completo la verificación de muteados y los comandos .mute / .unmute
 
       console.log('📩 Mensaje recibido:', texto)
 
