@@ -11,7 +11,7 @@ export default {
       const userJid = message.key.participant || message.key.remoteJid || jid;
       const userShortId = userJid.split('@')[0];
 
-      const menuTexto = `¡Hola @${userShortId}! soy Naru *(main)*
+      const menuTexto = `¡Hola @${userShortId}! soy Toji-bot 
 
 ╭────  🪾𝐌̅𝐄꯭𝐍𝐔🍂 ────╮
 
